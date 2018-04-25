@@ -3,7 +3,7 @@ package com.gmail.gm.jcant.javaPro;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-@SaveTo(file = "./text.txt")
+@SaveTo(file = "./textFile.txt")
 public class TextContainer {
 	private String text = null;
 
