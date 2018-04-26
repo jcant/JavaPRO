@@ -1,7 +1,5 @@
 package com.gmail.gm.jcant.javaPro;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class App {
     public static void main(String[] args){
@@ -16,11 +14,11 @@ public class App {
         SaveLoadClass saver = new SaveLoadClass(a,"./target_class.json");
         saver.saveClass();
 
-        TargetClass b = new TargetClass();
-        saver.setTarget(b);
+ 
+        saver.setTarget(null);
         saver.loadClass();
 
-        System.out.println(b);
+        System.out.println(saver.getTarget());
 
     }
 }

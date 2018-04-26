@@ -6,7 +6,7 @@
 
     <groupId>com.gmail.gm.jcant.javaPro</groupId>
     <artifactId>HW13ReflectionAPISerialize</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->

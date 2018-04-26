@@ -7,7 +7,7 @@ public class TargetClass {
     private int fieldInt;
 
     private double fieldDouble;
-
+    @Save
     private String fieldString;
     @Save
     private int[] fieldIntArray;
