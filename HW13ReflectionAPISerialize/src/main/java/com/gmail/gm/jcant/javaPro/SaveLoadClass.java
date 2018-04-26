@@ -7,21 +7,18 @@ import java.io.*;
 
 public class SaveLoadClass {
 	private TargetClass target;
-	private String filename;
 
 	public SaveLoadClass() {
 		super();
 		this.target = null;
-		this.filename = null;
 	}
 
-	public SaveLoadClass(TargetClass target, String filename) {
+	public SaveLoadClass(TargetClass target) {
 		super();
 		this.target = target;
-		this.filename = filename;
 	}
 
-	public void saveClass() {
+	public void saveClass(String filename) {
 		if (target == null) {
 			throw new IllegalArgumentException("Target is null");
 		}
@@ -41,7 +38,7 @@ public class SaveLoadClass {
 		}
 	}
 
-	public void loadClass() {
+	public void loadClass(String filename) {
 		if (filename == null) {
 			throw new IllegalArgumentException("Filename not set");
 		}
@@ -66,16 +63,8 @@ public class SaveLoadClass {
 		this.target = target;
 	}
 
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-
 	@Override
 	public String toString() {
-		return "SaveLoadClass{" + "target=" + target + ", filename='" + filename + '\'' + '}';
+		return "SaveLoadClass{" + "target=" + target + "'}'";
 	}
 }

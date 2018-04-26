@@ -11,12 +11,12 @@ public class App {
 
         System.out.println(a);
 
-        SaveLoadClass saver = new SaveLoadClass(a,"./target_class.json");
-        saver.saveClass();
+        SaveLoadClass saver = new SaveLoadClass(a);
+        saver.saveClass("./target_class.json");
 
  
         saver.setTarget(null);
-        saver.loadClass();
+        saver.loadClass("./target_class.json");
 
         System.out.println(saver.getTarget());
 
