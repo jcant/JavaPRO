@@ -18,32 +18,21 @@ public class JSONTargetWorker implements JsonSerializer<TargetClass>, JsonDeseri
 		for (Field field : fields) {
 			if (field.isAnnotationPresent(Save.class)) {
 				field.setAccessible(true);
-				if (field.getName().equals("fieldInt")) {
-					if (jsonObject.get("fieldInt") != null) {
-						tg.setFieldInt(jsonObject.get("fieldInt").getAsInt());
-					}
+				if (field.getName().equals("fieldInt") && jsonObject.get("fieldInt") != null) {
+					tg.setFieldInt(jsonObject.get("fieldInt").getAsInt());
 				}
-				if (field.getName().equals("fieldDouble")) {
-					if (jsonObject.get("fieldDouble") != null) {
-						tg.setFieldDouble(jsonObject.get("fieldDouble").getAsDouble());
-					}
+				if (field.getName().equals("fieldDouble") && jsonObject.get("fieldDouble") != null) {
+					tg.setFieldDouble(jsonObject.get("fieldDouble").getAsDouble());
 				}
-				if (field.getName().equals("fieldString")) {
-					if (jsonObject.get("fieldString") != null) {
-						tg.setFieldString(jsonObject.get("fieldString").getAsString());
-					}
+				if (field.getName().equals("fieldString") && jsonObject.get("fieldString") != null) {
+					tg.setFieldString(jsonObject.get("fieldString").getAsString());
 				}
-				if (field.getName().equals("fieldIntArray")) {
-					if (jsonObject.get("fieldIntArray") != null) {
-						Gson gson = new Gson();
-						tg.setFieldIntArray(gson.fromJson(jsonObject.get("fieldIntArray").getAsString(), int[].class));
-					}
+				if (field.getName().equals("fieldIntArray") && jsonObject.get("fieldIntArray") != null) {
+					Gson gson = new Gson();
+					tg.setFieldIntArray(gson.fromJson(jsonObject.get("fieldIntArray").getAsString(), int[].class));
 				}
 			}
 		}
-
-		//System.out.println(tg);
-
 		return tg;
 	}
 
@@ -61,7 +50,7 @@ public class JSONTargetWorker implements JsonSerializer<TargetClass>, JsonDeseri
 					if (field.getType() == int.class) {
 						jObject.addProperty(field.getName(), field.getInt(targetClass));
 					}
-					if (field.getType() == Double.class) {
+					if (field.getType() == double.class) {
 						jObject.addProperty(field.getName(), field.getDouble(targetClass));
 					}
 					if (field.getType() == String.class) {
