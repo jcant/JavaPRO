@@ -1,0 +1,17 @@
+{
+  "name": "Petr",
+  "surname": "Petrov",
+  "phones": [
+    "044-256-78-90",
+    "066-123-45-67"
+  ],
+  "sites": [
+    "http://site1.com",
+    "http://site2.com"
+  ],
+  "address": {
+    "country": "UK",
+    "city": "London",
+    "street": "Street"
+  }
+}
