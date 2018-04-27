@@ -5,31 +5,31 @@ import java.io.PrintWriter;
 
 @SaveTo(file = "./textFile.txt")
 public class TextContainer {
-	private String text = null;
+    private String text = null;
 
-	public TextContainer() {
-		super();
-	}
+    public TextContainer() {
+        super();
+    }
 
-	public TextContainer(String text) {
-		super();
-		this.text = text;
-	}
+    public TextContainer(String text) {
+        super();
+        this.text = text;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    public void setText(String text) {
+        this.text = text;
+    }
 
-	@Saver
-	public void saveText(String file) {
-		try (PrintWriter pw = new PrintWriter(file)) {
-			pw.print(text);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+    @Saver
+    public void saveText(String file) {
+        try (PrintWriter pw = new PrintWriter(file)) {
+            pw.print(text);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
