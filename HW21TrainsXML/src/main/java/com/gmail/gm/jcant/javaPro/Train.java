@@ -8,105 +8,126 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import com.gmail.gm.jcant.JDate;
 
 @XmlRootElement(name = "train")
 public class Train {
-	private int id;
-	private String from;
-	private String to;
-	private Date dateTime;
+    private int id;
+    private String from;
+    private String to;
+    @XmlTransient
+    private Date dateTime;
 
-	public Train() {
-		super();
-	}
 
-	public Train(int id, String from, String to, Date dateTime) {
-		super();
-		this.id = id;
-		this.from = from;
-		this.to = to;
-		this.dateTime = dateTime;
-	}
+    public Train() {
+        super();
+    }
 
-	@XmlAttribute
-	public int getId() {
-		return id;
-	}
+    public Train(int id, String from, String to, Date dateTime) {
+        super();
+        this.id = id;
+        this.from = from;
+        this.to = to;
+        this.dateTime = dateTime;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @XmlAttribute
+    public int getId() {
+        return id;
+    }
 
-	@XmlElement(name = "date")
-	public String getDate() {
-		return JDate.getDate(dateTime);
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@XmlElement(name = "departure")
-	public String getTime() {
-		return JDate.getTime(dateTime);
-	}
+    @XmlElement(name = "date")
+    public String getDate() {
+        if (dateTime == null) {
+            return null;
+        } else {
+            JDate.setDefaultDateFormat("dd.MM.yyyy");
+            return JDate.getDate(dateTime);
+        }
+    }
 
-	public void setDate(String date) {
-		Calendar our = Calendar.getInstance();
-		Calendar setter = Calendar.getInstance();
-		our.setTime(dateTime);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-		try {
-			setter.setTime(sdf.parse(date));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+    @XmlElement(name = "departure")
+    public String getTime() {
+        if (dateTime == null) {
+            return null;
+        } else {
+            JDate.setDefaultTimeFormat("HH:mm");
+            return JDate.getTime(dateTime);
+        }
+    }
 
-		our.set(setter.get(Calendar.YEAR), setter.get(Calendar.MONTH), setter.get(Calendar.DAY_OF_MONTH));
-		dateTime = our.getTime();
-	}
+    public void setDate(String date) {
+        if (dateTime == null) {
+            dateTime = new Date();
+        }
+        Calendar our = Calendar.getInstance();
+        Calendar setter = Calendar.getInstance();
+        our.setTime(dateTime);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            setter.setTime(sdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-	public void setTime(String time) {
-		Calendar our = Calendar.getInstance();
-		Calendar setter = Calendar.getInstance();
-		our.setTime(dateTime);
-		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
-		try {
-			setter.setTime(sdf.parse(time));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+        our.set(setter.get(Calendar.YEAR), setter.get(Calendar.MONTH), setter.get(Calendar.DAY_OF_MONTH));
+        dateTime = our.getTime();
 
-		our.set(Calendar.HOUR, setter.get(Calendar.HOUR));
-		our.set(Calendar.MINUTE, setter.get(Calendar.MINUTE));
-		our.set(Calendar.SECOND, 0);
-		dateTime = our.getTime();
-	}
+    }
 
-	public String getFrom() {
-		return from;
-	}
+    public void setTime(String time) {
+        if (dateTime == null) {
+            dateTime = new Date();
+        }
+        Calendar our = Calendar.getInstance();
+        Calendar setter = Calendar.getInstance();
+        our.setTime(dateTime);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        try {
+            setter.setTime(sdf.parse(time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-	public void setFrom(String from) {
-		this.from = from;
-	}
+        our.set(Calendar.HOUR_OF_DAY, setter.get(Calendar.HOUR_OF_DAY));
+        our.set(Calendar.MINUTE, setter.get(Calendar.MINUTE));
+        our.set(Calendar.SECOND, 0);
+        dateTime = our.getTime();
+    }
 
-	public String getTo() {
-		return to;
-	}
+    public String getFrom() {
+        return from;
+    }
 
-	public void setTo(String to) {
-		this.to = to;
-	}
+    public void setFrom(String from) {
+        this.from = from;
+    }
 
-	public Date getDateTime() {
-		return dateTime;
-	}
+    public String getTo() {
+        return to;
+    }
 
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
-	}
+    public void setTo(String to) {
+        this.to = to;
+    }
 
-	@Override
-	public String toString() {
-		return "Train [id=" + id + ", from=" + from + ", to=" + to + ", dateTime=" + dateTime + "]";
-	}
+    public Date getDateTime(){
+        return dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Train{" +
+                "id=" + id +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", dateTime=" + dateTime +
+                '}';
+    }
 }

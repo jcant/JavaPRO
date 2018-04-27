@@ -3,13 +3,13 @@
 	<train id="1">
 		<from>Kyiv</from>
 		<to>Donetsk</to>
-		<date>19.12.2013</date>
+		<date>27.04.2018</date>
 		<departure>15:05</departure>
 	</train>
 	<train id="2">
 		<from>Lviv</from>
 		<to>Donetsk</to>
-		<date>19.12.2013</date>
+		<date>27.04.2018</date>
 		<departure>19:05</departure>
 	</train>
 </trains>
