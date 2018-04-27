@@ -8,6 +8,7 @@
   <packaging>jar</packaging>
 
   <name>JDate</name>
+  <description>Simply get String/Date values (add getTime())</description>
   <url>http://maven.apache.org</url>
 
   <properties>

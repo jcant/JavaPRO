@@ -8,6 +8,7 @@ import java.util.Date;
 public class JDate {
 
 	private static String defaultFormat = "dd-MM-yyyy";
+	private static String defaultTimeFormat = "hh:mm:ss";
 
 	public static void setDefaultFormat(String format) {
 		defaultFormat = format;
@@ -22,14 +23,18 @@ public class JDate {
 		} catch (ParseException e) {
 			System.err.println("Error getting quick date!");
 		}
-		System.out.println("we are in getDate*999******");
 		return result;
 	}
 
 	public static String getDate(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat(defaultFormat);
 		String result = sdf.format(date);
-		System.out.println("we are in getDate*888******");
+		return result;
+	}
+	
+	public static String getTime(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat(defaultTimeFormat);
+		String result = sdf.format(date);
 		return result;
 	}
 
