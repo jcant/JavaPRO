@@ -5,37 +5,77 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.*;
 
-@WebServlet(name = "Servlet", urlPatterns = "/count")
+@WebServlet(name = "Servlet", urlPatterns = "/")
 public class QuestionServlet extends HttpServlet {
-    static final int QUESTION_1_YES = 0;
-    static final int QUESTION_1_NO = 1;
-    static final int QUESTION_2_YES = 2;
-    static final int QUESTION_2_NO = 3;
 
-    static final String TEMPLATE = "<html>" +
-            "<head><title>Answers</title></head>" +
-            "<body><h1>%s</h1></body></html>";
-
-    final int[] results = new int[4];
+    private Map<String, Question> questions = new HashMap<>();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final String q1 = req.getParameter("question1");
-        final String q2 = req.getParameter("question2");
+    public void init() throws ServletException {
+        super.init();
+        questions.put("Question1", new Question("Do you like Java?"));
+        questions.put("Question2", new Question("Do you like JavaScript?"));
+        questions.put("Question3", new Question("Do you like .NET?"));
+        questions.put("Question4", new Question("Do you like PHP?"));
+        questions.put("Question5", new Question("Do you like C++?"));
 
-        final int idx1 = "YES".equals(q1) ? QUESTION_1_YES : QUESTION_1_NO;
-        final int idx2 = "YES".equals(q2) ? QUESTION_2_YES : QUESTION_2_NO;
+    }
 
-        results[idx1]++;
-        results[idx2]++;
+    @Override
+    synchronized protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String res = "<p>Question1: yes = " + results[QUESTION_1_YES] +
-                ", no = " + results[QUESTION_1_NO] + "</p>" +
-                "<p>Question2: yes = " + results[QUESTION_2_YES] +
-                ", no = " + results[QUESTION_2_NO] + "</p>";
+        String name = req.getParameter("name");
+        String surname = req.getParameter("surname");
+        String sAge = req.getParameter("age");
 
-        resp.getWriter().println(String.format(TEMPLATE, res));
+        if (checkData(name, surname, sAge)!=true){
+            resp.sendError(500);
+            return;
+        }
+
+        HttpSession session = req.getSession(true);
+
+        session.setAttribute("name",name);
+        session.setAttribute("surname",surname);
+        session.setAttribute("age",sAge);
+
+        Set<String> ids = questions.keySet();
+        for (String id : ids) {
+            String answer = (String) req.getParameter(id);
+            if (answer.equals("YES")) {
+                questions.get(id).addCountYes();
+            } else {
+                questions.get(id).addCountNo();
+            }
+        }
+        session.setAttribute("questions", questions);
+        resp.sendRedirect("count.jsp");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession(true);
+        session.setAttribute("questions", questions);
+        resp.sendRedirect("questions.jsp");
+    }
+
+    private boolean checkData(String name, String surname, String sAge){
+        int age = 0;
+
+        try {
+            age = Integer.parseInt(sAge);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        if ((name.equals(""))||(surname.equals(""))){
+            return false;
+        }
+
+        return true;
     }
 }
