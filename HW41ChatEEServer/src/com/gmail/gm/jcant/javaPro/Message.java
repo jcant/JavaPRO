@@ -42,20 +42,17 @@ public class Message {
 				.toString();
 	}
 
-	public int send(String url) throws IOException {
+	public int send(String url) throws IOException{
 		URL obj = new URL(url);
 		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 		
 		conn.setRequestMethod("POST");
 		conn.setDoOutput(true);
-	
-		OutputStream os = conn.getOutputStream();
-		try {
+
+		try(OutputStream os = conn.getOutputStream()) {
 			String json = toJSON();
 			os.write(json.getBytes(StandardCharsets.UTF_8));
 			return conn.getResponseCode();
-		} finally {
-			os.close();
 		}
 	}
 	

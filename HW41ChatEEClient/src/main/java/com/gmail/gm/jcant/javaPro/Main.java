@@ -10,11 +10,11 @@ public class Main {
 			System.out.println("Enter your login: ");
 			String login = scanner.nextLine();
 	
-			Thread th = new Thread(new GetThread());
+			Thread th = new Thread(new GetThread(login));
 			th.setDaemon(true);
 			th.start();
 
-            System.out.println("Enter your message: ");
+            System.out.println("Enter your message (!TO:username - private message): ");
 			while (true) {
 				String text = scanner.nextLine();
 				if (text.isEmpty()) break;
