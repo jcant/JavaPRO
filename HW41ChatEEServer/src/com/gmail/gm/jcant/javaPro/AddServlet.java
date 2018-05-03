@@ -28,6 +28,7 @@ public class AddServlet extends HttpServlet {
         String bufStr = new String(buf, StandardCharsets.UTF_8);
 
         System.out.println(bufStr);
+        
         Message msg = Message.fromJSON(bufStr);
         if (msg != null) {
             msgList.add(msg);

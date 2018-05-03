@@ -1,8 +1,7 @@
 package com.gmail.gm.jcant.javaPro;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,9 +9,12 @@ import com.google.gson.GsonBuilder;
 public class MessageList {
     private static final MessageList msgList = new MessageList();
     private static final int LIMIT = 10;
+    
 
     private final Gson gson;
-    private final List<Message> list = new ArrayList<>();
+    //private final List<Message> list = new ArrayList<>();
+    private final Map<Integer, Message> list = new HashMap<>();
+    private int last = 0;
 
     public static MessageList getInstance() {
         return msgList;
@@ -28,7 +30,8 @@ public class MessageList {
             list.remove(0);
             list.remove(0);
         }
-        list.add(m);
+        m.setNumber(++last);
+        list.put(last,m);
     }
 
     public synchronized String toJSON(int n, String user) {
@@ -37,5 +40,9 @@ public class MessageList {
         }
 
         return gson.toJson(new JsonMessages(list, n, user));
+    }
+    
+    public int getLast() {
+    	return last;
     }
 }
