@@ -13,7 +13,8 @@ public class JsonMessages {
 		this.list = new ArrayList<>();
 		Set<Integer> keys = sourceList.keySet();
 		for (Integer key : keys) {
-			if (key >= fromIndex) {
+			//System.out.println(key);
+			if (key > fromIndex) {
 				Message m = sourceList.get(key);
 				if (m.getTo() == null || m.getTo().equals(user) || m.getFrom().equals(user)) {
 					list.add(m);

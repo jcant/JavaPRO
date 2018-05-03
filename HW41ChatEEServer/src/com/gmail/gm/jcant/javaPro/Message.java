@@ -50,7 +50,7 @@ public class Message {
 	public String toString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		return new StringBuilder().append("[").append(sdf.format(date)).append(", From: ").append(from).append(", To: ")
-				.append(to).append("] ").append(text).toString();
+				.append(to).append(", number: ").append(number).append("] ").append(text).toString();
 	}
 	
     public void print(String user) {

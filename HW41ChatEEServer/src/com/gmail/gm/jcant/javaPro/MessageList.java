@@ -26,19 +26,18 @@ public class MessageList {
     }
 
     public synchronized void add(Message m) {
-        if (list.size() + 1 == LIMIT) {
-            list.remove(0);
-            list.remove(0);
+        if ((list.size() + 1) == LIMIT) {
+            Integer kk = list.keySet().iterator().next();
+            //System.out.println("removing k="+kk);
+            list.remove(kk);
+            //list.remove(0);
         }
         m.setNumber(++last);
+        //System.out.println(m);
         list.put(last,m);
     }
 
     public synchronized String toJSON(int n, String user) {
-        if (n == list.size()) {
-            return null;
-        }
-
         return gson.toJson(new JsonMessages(list, n, user));
     }
     

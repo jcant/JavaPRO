@@ -27,7 +27,7 @@ public class AddServlet extends HttpServlet {
         byte[] buf = requestBodyToArray(req);
         String bufStr = new String(buf, StandardCharsets.UTF_8);
 
-        System.out.println(bufStr);
+        //System.out.println(bufStr);
         
         Message msg = Message.fromJSON(bufStr);
         if (msg != null) {

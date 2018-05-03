@@ -23,17 +23,18 @@ public class GetListServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        //System.out.println("IN GET");
         String fromStr = req.getParameter("from");
         String user = req.getParameter("user");
         int from = 0;
         try {
             from = Integer.parseInt(fromStr);
         } catch (Exception ex) {
-            System.out.println(ex);
+            ex.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-
+        //System.out.println("from="+from+" user="+user);
         String json = msgList.toJSON(from, user);
         if (json != null) {
             OutputStream os = resp.getOutputStream();
