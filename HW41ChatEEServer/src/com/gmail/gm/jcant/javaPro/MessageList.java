@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder;
 
 public class MessageList {
     private static final MessageList msgList = new MessageList();
-    private static final int LIMIT = 10;
+    private static final int LIMIT = 100;
     
 
     private final Gson gson;
