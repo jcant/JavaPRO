@@ -16,6 +16,7 @@ public class Message {
     private String to;
     private String text;
     private int number;
+    private String room = null;
 
     public Message(){
         super();
@@ -123,4 +124,13 @@ public class Message {
 	public int getNumber() {
 		return number;
 	}
+
+	public String getRoom() {
+		return room;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
+	}
+	
 }

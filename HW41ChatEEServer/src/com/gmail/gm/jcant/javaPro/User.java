@@ -6,6 +6,7 @@ public class User {
     private boolean online = false;
     private long lastActive;
     private String currentKey;
+    private String room;
 
     public User() {
         super();
@@ -15,13 +16,14 @@ public class User {
         super();
         this.login = login;
         this.password = password;
+        this.room = null;
     }
 
     public String generateKey(){
         StringBuilder sb = new StringBuilder();
         sb.append(login).append(password).append(System.nanoTime());
         currentKey = "" + sb.toString().hashCode();
-        lastActive = System.nanoTime();
+        lastActive = System.currentTimeMillis();
         online = true;
         return currentKey;
     }
@@ -66,12 +68,20 @@ public class User {
         this.currentKey = currentKey;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+	public String getRoom() {
+		return room;
+	}
+
+	public void setRoom(String room) {
+		this.room = room;
+	}
+
+	@Override
+	public String toString() {
+		return "User [login=" + login + ", password=" + password + ", online=" + online + ", lastActive=" + lastActive
+				+ ", currentKey=" + currentKey + "]";
+	}
+
+    
 
 }

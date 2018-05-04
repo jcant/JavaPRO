@@ -8,13 +8,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Auth {
     private String key;
     private String login;
     private String password;
+    private Gson gson;
 
     public Auth() {
         super();
+        gson = new GsonBuilder().setDateFormat("MMMMM d, yyyy h:m:s a").create();
     }
 
     public void doExit(){
@@ -37,7 +42,24 @@ public class Auth {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("KEY returned="+key);
+        //System.out.println("KEY returned="+key);
+    }
+    
+    public void getUserStatus(String text) {
+    	String url = Utils.getURL() + "/userstatus";
+    	if (text.startsWith("!INFO:")) {
+           url += "?login="+text.substring(6);
+    	}
+    	
+    	try {
+			String[] result = gson.fromJson(getData(url), String[].class);
+			for (String item : result) {
+				System.out.println(item);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
     }
 
     private String getData(String sUrl) throws IOException {

@@ -37,7 +37,7 @@ public class MessageList {
         list.put(last,m);
     }
 
-    public synchronized String toJSON(int n, String user) {
+    public synchronized String toJSON(int n, User user) {
         return gson.toJson(new JsonMessages(list, n, user));
     }
     

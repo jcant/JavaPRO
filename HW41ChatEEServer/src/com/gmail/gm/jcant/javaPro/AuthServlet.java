@@ -17,6 +17,10 @@ public class AuthServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         userList = UserList.getInstance();
+        
+        Thread thKick = new Thread(new UserKickThread());
+        thKick.setDaemon(true);
+        thKick.start();
     }
 
     @Override
@@ -32,7 +36,7 @@ public class AuthServlet extends HttpServlet {
 
             String key = userList.authUser(login, passw);
 
-            System.out.println("key=" + key);
+            //System.out.println("key=" + key);
 
             if (key != null) {
                 OutputStream os = resp.getOutputStream();

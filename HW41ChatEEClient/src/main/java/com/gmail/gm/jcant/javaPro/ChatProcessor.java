@@ -38,6 +38,10 @@ public class ChatProcessor {
             cont = false;
             return true;
         }
+        if (text.startsWith("!INFO")){
+            auth.getUserStatus(text);
+            return true;
+        }
         if (text.startsWith("!HELP")){
             printHelp();
             return true;
@@ -49,6 +53,8 @@ public class ChatProcessor {
     private void printHelp(){
         System.out.println("'!HELP'\t\t - print this help info");
         System.out.println("'!TO:login'\t - private message to user=login");
+        System.out.println("'!INFO:login'\t - user status");
+        System.out.println("'!INFO'\t\t - All users status");
         System.out.println("'!EXIT'\t\t - logout this user");
     }
 }

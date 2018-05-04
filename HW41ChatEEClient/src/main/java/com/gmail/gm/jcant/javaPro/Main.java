@@ -8,7 +8,7 @@ public class Main {
         Auth auth = new Auth();
         auth.doAuth();
 
-        Thread th = new Thread(new GetThread(auth.getLogin()));
+        Thread th = new Thread(new GetThread(auth));
         th.setDaemon(true);
         th.start();
 
