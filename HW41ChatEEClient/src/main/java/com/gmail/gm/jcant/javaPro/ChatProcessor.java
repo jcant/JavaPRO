@@ -5,12 +5,12 @@ import java.util.Scanner;
 
 public class ChatProcessor {
     private Scanner scanner = new Scanner(System.in);
-    private Auth auth;
+    private UserWorker userWorker;
     private boolean cont = true;
 
-    public ChatProcessor(Auth auth) {
+    public ChatProcessor(UserWorker userWorker) {
         super();
-        this.auth = auth;
+        this.userWorker = userWorker;
     }
 
     public void mainLoop() throws IOException {
@@ -21,7 +21,7 @@ public class ChatProcessor {
             if (text.isEmpty()) continue;
             if (findCommands(text)) continue;
 
-            Message m = new Message(auth.getKey(), text);
+            Message m = new Message(userWorker.getKey(), text);
             int res = m.send(Utils.getURL() + "/add");
 
             if (res != 200) { // 200 OK
@@ -34,12 +34,20 @@ public class ChatProcessor {
 
     private boolean findCommands(String text) {
         if (text.startsWith("!EXIT")){
-            auth.doExit();
+            userWorker.doExit();
             cont = false;
             return true;
         }
         if (text.startsWith("!INFO")){
-            auth.getUserStatus(text);
+            userWorker.getUserStatus(text);
+            return true;
+        }
+        if (text.startsWith("!ENTER")){
+            userWorker.getChangeRoom(text);
+            return true;
+        }
+        if (text.startsWith("!LEAVE")){
+            userWorker.getLeaveRoom(text);
             return true;
         }
         if (text.startsWith("!HELP")){
@@ -55,6 +63,8 @@ public class ChatProcessor {
         System.out.println("'!TO:login'\t - private message to user=login");
         System.out.println("'!INFO:login'\t - user status");
         System.out.println("'!INFO'\t\t - All users status");
+        System.out.println("'!ENTER:roomname' - enter room 'roomname' (create or enter if exist)");
+        System.out.println("'!LEAVE'\t - leave any room");
         System.out.println("'!EXIT'\t\t - logout this user");
     }
 }

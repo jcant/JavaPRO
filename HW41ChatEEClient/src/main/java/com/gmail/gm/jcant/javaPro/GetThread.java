@@ -14,10 +14,10 @@ public class GetThread implements Runnable {
 	private final Gson gson;
 	private int n;
 	//private String user;
-	private Auth auth;
+	private UserWorker userWorker;
 
-	public GetThread(Auth auth) {
-		this.auth = auth;
+	public GetThread(UserWorker userWorker) {
+		this.userWorker = userWorker;
 		gson = new GsonBuilder().setDateFormat("MMMMM d, yyyy h:m:s a").create();
 	}
 
@@ -25,7 +25,7 @@ public class GetThread implements Runnable {
 	public void run() {
 		try {
 			while (!Thread.interrupted()) {
-				URL url = new URL(Utils.getURL() + "/get?from=" + n + "&key=" + auth.getKey());
+				URL url = new URL(Utils.getURL() + "/get?from=" + n + "&key=" + userWorker.getKey());
 				HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
 				try (InputStream is = http.getInputStream()) {
@@ -34,7 +34,7 @@ public class GetThread implements Runnable {
 					JsonMessages list = gson.fromJson(strBuf, JsonMessages.class);
 					if (list != null) {
 						for (Message m : list.getList()) {
-							m.print(auth.getLogin());
+							m.print(userWorker.getLogin());
 							n = m.getNumber();
 						}
 					}

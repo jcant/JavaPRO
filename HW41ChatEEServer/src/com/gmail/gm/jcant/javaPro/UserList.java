@@ -54,6 +54,7 @@ public class UserList {
 		if (u != null) {
 			// System.out.println("Logout user: " + u.getLogin());
 			u.setOnline(false);
+			u.setRoom(null);
 		}
 	}
 
@@ -92,7 +93,7 @@ public class UserList {
 		for (String key : keys) {
 			User u = users.get(key);
 			if ((login == null) || (login.equals(u.getLogin()))) {
-				result.add(u.getLogin() + " online=" + u.isOnline());
+				result.add(u.getLogin() + " online=" + u.isOnline() + " room=" + u.getRoom());
 			}
 		}
 		return result;

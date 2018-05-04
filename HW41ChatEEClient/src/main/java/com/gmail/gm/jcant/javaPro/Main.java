@@ -5,14 +5,14 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-        Auth auth = new Auth();
-        auth.doAuth();
+        UserWorker uWorker = new UserWorker();
+        uWorker.doAuth();
 
-        Thread th = new Thread(new GetThread(auth));
+        Thread th = new Thread(new GetThread(uWorker));
         th.setDaemon(true);
         th.start();
 
-        ChatProcessor chatProcessor = new ChatProcessor(auth);
+        ChatProcessor chatProcessor = new ChatProcessor(uWorker);
 
         try {
             chatProcessor.mainLoop();

@@ -1,8 +1,6 @@
 package com.gmail.gm.jcant.javaPro;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,12 +31,9 @@ public class UserStatusServlet extends HttpServlet {
 		String list = gson.toJson(userList.getUsersStatusList(login));
 
 		if (list != null) {
-			OutputStream os = resp.getOutputStream();
-			byte[] buf = list.getBytes(StandardCharsets.UTF_8);
-			os.write(buf);
+			Utils.outputWrite(resp,list);
 		} else {
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
-
 }

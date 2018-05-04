@@ -25,6 +25,7 @@ public class User {
         currentKey = "" + sb.toString().hashCode();
         lastActive = System.currentTimeMillis();
         online = true;
+        room = null;
         return currentKey;
     }
 

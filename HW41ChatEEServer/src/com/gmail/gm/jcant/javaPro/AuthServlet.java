@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 
 @WebServlet(name = "Auth", urlPatterns = "/auth")
 public class AuthServlet extends HttpServlet {
@@ -39,9 +37,7 @@ public class AuthServlet extends HttpServlet {
             //System.out.println("key=" + key);
 
             if (key != null) {
-                OutputStream os = resp.getOutputStream();
-                byte[] buf = key.getBytes(StandardCharsets.UTF_8);
-                os.write(buf);
+                Utils.outputWrite(resp, key);
             } else {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }

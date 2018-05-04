@@ -11,26 +11,26 @@ import java.util.Scanner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Auth {
+public class UserWorker {
     private String key;
     private String login;
     private String password;
     private Gson gson;
 
-    public Auth() {
+    public UserWorker() {
         super();
         gson = new GsonBuilder().setDateFormat("MMMMM d, yyyy h:m:s a").create();
     }
 
-    public void doExit(){
+    public void doExit() {
         try {
-            String resp = getData(Utils.getURL() + "/auth?login="+login+"&exit=true");
+            String resp = getData(Utils.getURL() + "/auth?login=" + login + "&exit=true");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void doAuth(){
+    public void doAuth() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your login: ");
         login = scanner.nextLine();
@@ -44,22 +44,50 @@ public class Auth {
         }
         //System.out.println("KEY returned="+key);
     }
-    
-    public void getUserStatus(String text) {
-    	String url = Utils.getURL() + "/userstatus";
-    	if (text.startsWith("!INFO:")) {
-           url += "?login="+text.substring(6);
-    	}
-    	
-    	try {
-			String[] result = gson.fromJson(getData(url), String[].class);
-			for (String item : result) {
-				System.out.println(item);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
+    public void getUserStatus(String text) {
+        String url = Utils.getURL() + "/userstatus";
+        if (text.startsWith("!INFO:")) {
+            url += "?login=" + text.substring(6);
+        }
+
+        try {
+            String[] result = gson.fromJson(getData(url), String[].class);
+            for (String item : result) {
+                System.out.println(item);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void getChangeRoom(String text) {
+        String url = Utils.getURL() + "/room";
+        if (text.startsWith("!ENTER:")) {
+            url += "?room=" + text.substring(7) + "&key=" + key;
+        }
+
+        try {
+            getData(url);
+            System.out.println("You are in the room '"+text.substring(7)+"'");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getLeaveRoom(String text) {
+        String url = Utils.getURL() + "/room";
+        if (text.startsWith("!LEAVE")) {
+            url += "?exit=true&key=" + key;
+        }
+
+        try {
+            getData(url);
+            System.out.println("You are leave the room");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getData(String sUrl) throws IOException {
@@ -69,7 +97,7 @@ public class Auth {
 
         if (connect.getContentLengthLong() != 0) {
 
-            try (InputStream is = connect.getInputStream(); InputStreamReader isr = new InputStreamReader(is,"utf-8")) {
+            try (InputStream is = connect.getInputStream(); InputStreamReader isr = new InputStreamReader(is, "utf-8")) {
                 StringBuilder sb = new StringBuilder();
 
                 BufferedReader br = new BufferedReader(isr);

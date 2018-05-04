@@ -34,6 +34,7 @@ public class MessageAddServlet extends HttpServlet {
 			User user = userList.getAuthUser(msg.getFrom());
 			if (user != null) {
 				msg.setFrom(user.getLogin());
+				msg.setRoom(user.getRoom());
 				msgList.add(msg);
 			} else {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
