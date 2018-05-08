@@ -8,7 +8,6 @@ public class DbProperties {
     private String url;
     private String user;
     private String password;
-    private String type;
 
     public DbProperties() {
         InputStream is = getClass().getClassLoader().getResourceAsStream("db.properties");
@@ -24,7 +23,6 @@ public class DbProperties {
         url = props.getProperty("db.url");
         user = props.getProperty("db.user");
         password = props.getProperty("db.password");
-        type = props.getProperty("db.type");
     }
 
     public String getUrl() {
@@ -39,13 +37,4 @@ public class DbProperties {
         return password;
     }
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-    
-    
 }
