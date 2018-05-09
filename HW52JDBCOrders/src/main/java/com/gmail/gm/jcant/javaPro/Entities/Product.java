@@ -1,4 +1,4 @@
-package com.gmail.gm.jcant.javaPro;
+package com.gmail.gm.jcant.javaPro.Entities;
 
 public class Product {
 	private int id = 0;
