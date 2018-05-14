@@ -133,7 +133,6 @@ public class Main {
             for (Menu dish: menuList) {
 
                 if(summ+dish.getWeight() < max){
-                    summ+=dish.getWeight();
                     resultMenu.add(dish);
                 }
 
