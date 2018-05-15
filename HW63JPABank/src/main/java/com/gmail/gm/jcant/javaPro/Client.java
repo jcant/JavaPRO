@@ -2,7 +2,6 @@ package com.gmail.gm.jcant.javaPro;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,6 +26,15 @@ public class Client {
         this.name = name;
     }
 
+    public Account getAccount(Currency curr) {
+    	for (Account account : accounts) {
+			if(account.getCurrency().equals(curr)) {
+				return account;
+			}
+		}
+    	
+    	return null;
+    }
     public void addAccount(Account acc){
         acc.setClient(this);
         accounts.add(acc);
@@ -56,12 +64,50 @@ public class Client {
         this.accounts = accounts;
     }
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", accounts=" + accounts +
-                '}';
-    }
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Client: id=").append(id).append(", name=").append(name).append(System.lineSeparator());
+		builder.append(accounts).append(System.lineSeparator());
+		builder.append(" ---end client info--- ").append(System.lineSeparator());
+		return builder.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accounts == null) ? 0 : accounts.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Client other = (Client) obj;
+		if (accounts == null) {
+			if (other.accounts != null)
+				return false;
+		} else if (!accounts.equals(other.accounts))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+    
+    
 }
