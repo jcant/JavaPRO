@@ -31,7 +31,7 @@ public class Controller {
         emf.close();
     }
 
-    public void convertAmount(Client client, Currency from, Currency to, double value) {
+    synchronized public void convertAmount(Client client, Currency from, Currency to, double value) {
         if ((from == null) || (to == null) || (client == null)) {
             throw new IllegalArgumentException("Null argument!");
         }

@@ -17,7 +17,7 @@ public class Main {
 			addClients();
 			
 			printClients();
-			System.out.println("*** --- ***");
+			System.out.println("*** ------------------ ***");
 			controller.amountOperation(controller.getClient(1), controller.getCurrency("UAH"), 10000);
 			controller.amountOperation(controller.getClient(2), controller.getCurrency("EUR"), 10000);
 			controller.amountOperation(controller.getClient(3), controller.getCurrency("USD"), 10000);
@@ -25,13 +25,13 @@ public class Main {
 			controller.amountOperation(controller.getClient(2), controller.getCurrency("EUR"), -5000);
 			controller.amountOperation(controller.getClient(3), controller.getCurrency("USD"), -5000);
 			printClients();
-			System.out.println("*** --- ***");
+			System.out.println("*** ------------------ ***");
 			controller.transferAmount(controller.getClient(1),controller.getClient(2),controller.getCurrency("UAH"),3000);
 			printClients();
-			System.out.println("*** --- ***");
+			System.out.println("*** ------------------ ***");
 			controller.convertAmount(controller.getClient(2),controller.getCurrency("UAH"), controller.getCurrency("USD"),3000);
 			printClients();
-			System.out.println("*** --- ***");
+			System.out.println("*** ------------------ ***");
 			Client cl = controller.getClient(1);
 			System.out.println("Client "+cl.getName()+" total amount:");
 			System.out.println(controller.getClient(1).getTotalAmount(controller.getCurrency("UAH"))+" UAH");
@@ -57,7 +57,7 @@ public class Main {
 				new Client("Sidorov Sidor") };
 		Random rd = new Random();
 		for (Client client : clients) {
-			client.addAccount(new Account(controller.getCurrency("UAH"),4000));// rd.nextInt(1000)));
+			client.addAccount(new Account(controller.getCurrency("UAH"),4000));//rd.nextInt(1000)));
 			client.addAccount(new Account(controller.getCurrency("EUR"),4000));//rd.nextInt(1000)));
 			client.addAccount(new Account(controller.getCurrency("USD"),4000));//rd.nextInt(1000)));
 			controller.addClient(client);

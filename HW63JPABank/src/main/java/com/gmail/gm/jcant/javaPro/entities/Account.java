@@ -64,7 +64,7 @@ public class Account {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    synchronized public void setAmount(double amount) {
         this.amount = amount;
     }
 
