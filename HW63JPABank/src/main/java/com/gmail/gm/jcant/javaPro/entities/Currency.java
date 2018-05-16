@@ -1,4 +1,4 @@
-package com.gmail.gm.jcant.javaPro;
+package com.gmail.gm.jcant.javaPro.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

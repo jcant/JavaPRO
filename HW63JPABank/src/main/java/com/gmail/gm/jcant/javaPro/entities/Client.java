@@ -1,4 +1,4 @@
-package com.gmail.gm.jcant.javaPro;
+package com.gmail.gm.jcant.javaPro.entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -39,6 +39,22 @@ public class Client {
         acc.setClient(this);
         accounts.add(acc);
     }
+
+    public double getTotalAmount(Currency base) throws ClientException{
+    	if(accounts.size() == 0){
+    		throw new ClientException("Client does not have accounts!");
+		}
+		if (getAccount(base)==null){
+    		throw new ClientException("Client does not have such base currency");
+		}
+
+    	double total = 0;
+		for (Account acc: accounts) {
+			total += acc.getAmount() * acc.getCurrency().getKoef();
+		}
+		total = total / base.getKoef();
+		return total;
+	}
 
     public long getId() {
         return id;

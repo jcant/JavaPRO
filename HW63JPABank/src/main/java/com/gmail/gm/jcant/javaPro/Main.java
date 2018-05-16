@@ -1,5 +1,10 @@
 package com.gmail.gm.jcant.javaPro;
 
+import com.gmail.gm.jcant.javaPro.entities.Account;
+import com.gmail.gm.jcant.javaPro.entities.Client;
+import com.gmail.gm.jcant.javaPro.entities.ClientException;
+import com.gmail.gm.jcant.javaPro.entities.Currency;
+
 import java.util.Random;
 
 public class Main {
@@ -7,12 +12,12 @@ public class Main {
 	private static Controller controller = new Controller();
 
 	public static void main(String[] args) {
-
 		try {
 			fillCurrency();
 			addClients();
 			
 			printClients();
+			System.out.println("*** --- ***");
 			controller.amountOperation(controller.getClient(1), controller.getCurrency("UAH"), 10000);
 			controller.amountOperation(controller.getClient(2), controller.getCurrency("EUR"), 10000);
 			controller.amountOperation(controller.getClient(3), controller.getCurrency("USD"), 10000);
@@ -20,11 +25,21 @@ public class Main {
 			controller.amountOperation(controller.getClient(2), controller.getCurrency("EUR"), -5000);
 			controller.amountOperation(controller.getClient(3), controller.getCurrency("USD"), -5000);
 			printClients();
-			
+			System.out.println("*** --- ***");
+			controller.transferAmount(controller.getClient(1),controller.getClient(2),controller.getCurrency("UAH"),3000);
+			printClients();
+			System.out.println("*** --- ***");
+			controller.convertAmount(controller.getClient(2),controller.getCurrency("UAH"), controller.getCurrency("USD"),3000);
+			printClients();
+			System.out.println("*** --- ***");
+			Client cl = controller.getClient(1);
+			System.out.println("Client "+cl.getName()+" total amount:");
+			System.out.println(controller.getClient(1).getTotalAmount(controller.getCurrency("UAH"))+" UAH");
+		} catch (ClientException e) {
+			e.printStackTrace();
 		} finally {
 			controller.close();
 		}
-
 	}
 
 	private static void printClients() {
@@ -42,18 +57,11 @@ public class Main {
 				new Client("Sidorov Sidor") };
 		Random rd = new Random();
 		for (Client client : clients) {
-			client.addAccount(new Account(controller.getCurrency("UAH"), rd.nextInt(1000)));
-			client.addAccount(new Account(controller.getCurrency("EUR"), rd.nextInt(1000)));
-			client.addAccount(new Account(controller.getCurrency("USD"), rd.nextInt(1000)));
+			client.addAccount(new Account(controller.getCurrency("UAH"),4000));// rd.nextInt(1000)));
+			client.addAccount(new Account(controller.getCurrency("EUR"),4000));//rd.nextInt(1000)));
+			client.addAccount(new Account(controller.getCurrency("USD"),4000));//rd.nextInt(1000)));
 			controller.addClient(client);
 		}
 
 	}
 }
-// * Создать базу данных «Банк» с таблицами «Пользователи»,
-// «Транзакции», «Счета» и «Курсы валют». Счет бывает 3-х видов:
-// USD, EUR, UAH. Написать запросы для пополнения счета в нужной
-// валюте, перевода средств с одного счета на другой, конвертации
-// валюты по курсу в рамках счетов одного пользователя. Написать
-// запрос для получения суммарных средств на счету одного
-// пользователя в UAH (расчет по курсу).
