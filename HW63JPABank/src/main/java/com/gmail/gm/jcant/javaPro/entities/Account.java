@@ -24,14 +24,6 @@ public class Account {
         super();
     }
 
-    synchronized public void operation(double delta) throws AccountException {
-        if ((amount + delta) < 0) {
-            throw new AccountException("Client amount: not enough money!");
-        } else {
-            amount = amount + delta;
-        }
-    }
-
     public Account(Currency currency, double amount) {
         this.currency = currency;
         this.amount = amount;
@@ -42,6 +34,15 @@ public class Account {
         this.currency = currency;
         this.amount = amount;
         this.client = client;
+    }
+    
+    synchronized public void operation(double delta) throws AccountException {
+        //if (((amount + delta) < 0)||((amount + delta) > 5000)) {
+        if ((amount + delta) < 0) {
+            throw new AccountException("Client amount: not enough money!");
+        } else {
+            amount = amount + delta;
+        }
     }
 
     public long getId() {
