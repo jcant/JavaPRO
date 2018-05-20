@@ -16,25 +16,23 @@ public class Main {
 			fillCurrency();
 			addClients();
 			
+			printClients();			
+			controller.amountChange(controller.getClient(1), controller.getCurrency("UAH"), 10000);
+			controller.amountChange(controller.getClient(1), controller.getCurrency("UAH"), -5000);
 			printClients();
-			System.out.println("*** ------------------ ***");
-			controller.amountOperation(controller.getClient(1), controller.getCurrency("UAH"), 10000);
-			controller.amountOperation(controller.getClient(2), controller.getCurrency("EUR"), 10000);
-			controller.amountOperation(controller.getClient(3), controller.getCurrency("USD"), 10000);
-			controller.amountOperation(controller.getClient(1), controller.getCurrency("UAH"), -5000);
-			controller.amountOperation(controller.getClient(2), controller.getCurrency("EUR"), -5000);
-			controller.amountOperation(controller.getClient(3), controller.getCurrency("USD"), -5000);
-			printClients();
-			System.out.println("*** ------------------ ***");
 			controller.transferAmount(controller.getClient(1),controller.getClient(2),controller.getCurrency("UAH"),3000);
 			printClients();
-			System.out.println("*** ------------------ ***");
-			controller.convertAmount(controller.getClient(2),controller.getCurrency("UAH"), controller.getCurrency("USD"),3000);
+			controller.convertAmount(controller.getClient(2),controller.getCurrency("EUR"), controller.getCurrency("USD"),3000);
 			printClients();
-			System.out.println("*** ------------------ ***");
-			Client cl = controller.getClient(1);
-			System.out.println("Client "+cl.getName()+" total amount:");
-			System.out.println(controller.getClient(1).getTotalAmount(controller.getCurrency("UAH"))+" UAH");
+			
+			Client client = controller.getClient(1);
+			System.out.println("Client "+client.getName()+" total amount:");
+			System.out.println(client.getTotalAmount(controller.getCurrency("UAH"))+" UAH");
+			
+			client = controller.getClient(2);
+			System.out.println("Client "+client.getName()+" total amount:");
+			System.out.println(client.getTotalAmount(controller.getCurrency("UAH"))+" UAH");
+			
 		} catch (ClientException e) {
 			e.printStackTrace();
 		} finally {
@@ -44,6 +42,7 @@ public class Main {
 
 	private static void printClients() {
 		controller.getClients().forEach(cl->System.out.println(cl));
+		System.out.println("*** ------------------ ***");
 	}
 	
 	private static void fillCurrency() {
@@ -57,9 +56,14 @@ public class Main {
 				new Client("Sidorov Sidor") };
 		Random rd = new Random();
 		for (Client client : clients) {
-			client.addAccount(new Account(controller.getCurrency("UAH"),4000));//rd.nextInt(1000)));
-			client.addAccount(new Account(controller.getCurrency("EUR"),4000));//rd.nextInt(1000)));
-			client.addAccount(new Account(controller.getCurrency("USD"),4000));//rd.nextInt(1000)));
+			try {
+				client.addAccount(new Account(controller.getCurrency("UAH"),5000));//rd.nextInt(1000)));
+				client.addAccount(new Account(controller.getCurrency("EUR"),5000));//rd.nextInt(1000)));
+				client.addAccount(new Account(controller.getCurrency("USD"),5000));//rd.nextInt(1000)));
+			} catch (ClientException e) {
+				e.printStackTrace();
+			}
+			
 			controller.addClient(client);
 		}
 

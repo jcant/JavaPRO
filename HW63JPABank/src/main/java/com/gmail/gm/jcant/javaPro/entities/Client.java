@@ -35,8 +35,11 @@ public class Client {
     	
     	return null;
     }
-    public void addAccount(Account acc){
-        acc.setClient(this);
+    public void addAccount(Account acc) throws ClientException{
+        if ((acc == null)||(accounts.contains(acc))) {
+        	throw new ClientException("Account is null or Client already has this account");
+        }
+    	acc.setClient(this);
         accounts.add(acc);
     }
 
