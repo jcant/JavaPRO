@@ -1,6 +1,7 @@
 /.metadata/
 /.recommenders/
 /RemoteSystemsTempFiles/
+/Servers/
 
 target/
 .idea/
