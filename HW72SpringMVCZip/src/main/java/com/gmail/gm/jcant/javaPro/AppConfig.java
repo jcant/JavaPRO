@@ -29,20 +29,20 @@ public class AppConfig {
         return new CommonsMultipartResolver();
     }
     
-    @Bean
-    public FilterRegistrationBean someFilterRegistration() {
-
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(encodingFilter());
-        registration.addUrlPatterns("/*");
-        registration.addInitParameter("encoding", "UTF-8");
-        registration.addInitParameter("forceEncoding", "true");
-        registration.setName("encodingFilter");
-        registration.setOrder(1);
-        return registration;
-    } 
-
-    public CharacterEncodingFilter encodingFilter() {
-        return new CharacterEncodingFilter();
-    }
+//    @Bean
+//    public FilterRegistrationBean someFilterRegistration() {
+//
+//        FilterRegistrationBean registration = new FilterRegistrationBean();
+//        registration.setFilter(encodingFilter());
+//        registration.addUrlPatterns("/*");
+//        registration.addInitParameter("encoding", "UTF-8");
+//        registration.addInitParameter("forceEncoding", "true");
+//        registration.setName("encodingFilter");
+//        registration.setOrder(1);
+//        return registration;
+//    }
+//
+//    public CharacterEncodingFilter encodingFilter() {
+//        return new CharacterEncodingFilter();
+//    }
 }

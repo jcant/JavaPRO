@@ -23,7 +23,7 @@
 
 		<div class="col-sm-8">
 			<div class="container">
-  				<form class="form-inline" action="./get_zip" enctype="multipart/form-data" method="POST">
+  				<form class="form-inline" action="./get_zip" enctype="multipart/form-data" method="POST" accept-charset="UTF-8">
     				<div class="form-group">
       					<label for="user_file">File:</label>
       					<input type="file" class="form-control" id="userFile" name="userFile" placeholder="Select file" style="height: auto;">
