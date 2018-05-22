@@ -27,7 +27,7 @@
     		   		
     	</div>
 	    <div class="col-sm-2">
-    		<img src="./photo/<%=id %>" height=10%>
+    		<img src="./thumb/<%=id %>" >
 	    </div>
     	<div class="col-sm-2">
     		<a href="./photo/<%=id %>">
