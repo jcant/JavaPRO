@@ -8,14 +8,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>net.sf.sevenzipjbinding</groupId>
-			<artifactId>sevenzipjbinding</artifactId>
-			<version>9.20-2.00beta</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.sevenzipjbinding</groupId>
-			<artifactId>sevenzipjbinding-all-platforms</artifactId>
-			<version>9.20-2.00beta</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-compress</artifactId>
+			<version>1.16</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

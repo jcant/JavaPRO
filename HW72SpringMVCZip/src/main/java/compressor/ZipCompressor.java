@@ -15,15 +15,15 @@ public class ZipCompressor implements Compressor {
 
 	@Override
 	public byte[] compress(MultipartFile[] userFile) {
-		
+
 		System.out.println("Use Zip method");
-		
+
 		byte[] bytes = null;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		try (ZipOutputStream zos = new ZipOutputStream(bos)) {
+
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ZipOutputStream zos = new ZipOutputStream(bos)) {
 
 			for (MultipartFile file : userFile) {
-				
+
 				String originName = convertCodesToLetters(file.getOriginalFilename());
 				ZipEntry ze = new ZipEntry(originName);
 				zos.putNextEntry(ze);
