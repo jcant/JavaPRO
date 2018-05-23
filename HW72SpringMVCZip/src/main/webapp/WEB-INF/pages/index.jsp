@@ -1,10 +1,3 @@
-<%@page import="org.springframework.http.HttpStatus"%>
-<%@page import="org.springframework.http.ResponseEntity"%>
-<%@page import="org.springframework.http.MediaType"%>
-<%@page import="org.springframework.http.HttpHeaders"%>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.Set" %>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>

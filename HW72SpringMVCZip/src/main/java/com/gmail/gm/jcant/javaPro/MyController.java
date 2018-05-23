@@ -1,5 +1,8 @@
 package com.gmail.gm.jcant.javaPro;
 
+import compressor.ArchiveFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,17 +16,15 @@ import compressor.SevenZipCompressor;
 import compressor.ZipCompressor;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/")
 public class MyController {
 
-
-    //private Compressor compressor = new ZipCompressor();
-    private Compressor compressor = new SevenZipCompressor();
+    @Autowired
+    @Qualifier("compressorZip")
+    //@Qualifier("compressorSevenZip")
+    private Compressor compressor;
 
     @RequestMapping("/")
     public String onIndex() {
@@ -37,9 +38,16 @@ public class MyController {
     		throw new ArchiveCreationErrorException();
     	}
 
-        byte[] bytes = compressor.compress(userFile);
+    	String extension = "file";
+    	if (compressor instanceof ZipCompressor){
+    	    extension = "zip";
+        }
+        if (compressor instanceof SevenZipCompressor){
+            extension = "7z";
+        }
 
-        String zipName = convertCodesToLetters(userFile[0].getOriginalFilename().substring(0, userFile[0].getOriginalFilename().lastIndexOf('.')) + ".zip");
+        ArchiveFile archive = compressor.compress(userFile);
+        String zipName = archive.getName();
         try {
 			zipName = new String(zipName.getBytes(),"ISO-8859-1");
 		} catch (UnsupportedEncodingException e) {
@@ -49,18 +57,6 @@ public class MyController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/zip"));
         headers.set("Content-Disposition", "attachment; filename=\"" + zipName + "\"");
-        return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+        return new ResponseEntity<byte[]>(archive.getData(), headers, HttpStatus.OK);
     }
-    
-    private String convertCodesToLetters(String nameCoded) {
-      Pattern p = Pattern.compile("&#\\d*;");
-      Matcher m = p.matcher(nameCoded);
-      while (m.find()) {
-          String gr = m.group();
-          char ch = (char) Integer.parseInt(gr.substring(2, gr.length() - 1));
-          nameCoded = nameCoded.replaceFirst(gr, "" + ch);
-      }
-
-      return nameCoded;
-  }
 }

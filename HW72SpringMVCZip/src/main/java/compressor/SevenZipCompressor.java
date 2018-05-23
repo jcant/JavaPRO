@@ -1,7 +1,11 @@
 package compressor;
 
+import com.gmail.gm.jcant.javaPro.ArchiveCreationErrorException;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
+
+import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -9,52 +13,41 @@ import java.io.File;
 import java.io.IOException;
 
 public class SevenZipCompressor implements Compressor {
-	@Override
-	public byte[] compress(MultipartFile[] files) {
 
-		System.out.println("Use 7Zip method");
+    @Autowired
+    LetterCodeConverter converter;
 
-		byte[] bytes = null;
+    @Override
+    public ArchiveFile compress(MultipartFile[] files) {
 
-		for (MultipartFile file : files) {
-			String fileName = file.getOriginalFilename();
+        ArchiveFile archive = new ArchiveFile();
+        String orName = files[0].getOriginalFilename();
+        archive.setName(converter.convertCodesToLetters(orName.substring(0, orName.lastIndexOf('.')) + ".7z"));
 
-			try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					SevenZOutputFile sevenZOutput = new SevenZOutputFile(new File(fileName))) {
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+             SeekableInMemoryByteChannel inMemoryByteChannel = new SeekableInMemoryByteChannel(bos.toByteArray());
+             SevenZOutputFile sevenZOutput = new SevenZOutputFile(inMemoryByteChannel)) {
 
-				SevenZArchiveEntry entry = sevenZOutput.createArchiveEntry(new File(fileName), fileName);
+            for (MultipartFile file : files) {
+                String fileName = converter.convertCodesToLetters(file.getOriginalFilename());
+                SevenZArchiveEntry entry = sevenZOutput.createArchiveEntry(new File(fileName), fileName);
+                entry.setSize(file.getSize());
+                sevenZOutput.putArchiveEntry(entry);
+                sevenZOutput.write(file.getBytes());
+                sevenZOutput.closeArchiveEntry();
+            }
 
-				entry.setSize(file.getSize());
-				sevenZOutput.putArchiveEntry(entry);
-				sevenZOutput.write(file.getBytes());
-				sevenZOutput.closeArchiveEntry();
+            sevenZOutput.close();
+            archive.setData(inMemoryByteChannel.array());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-				bytes = baos.toByteArray();
+        if (archive.getData() == null) {
+            throw new ArchiveCreationErrorException();
+        }
 
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-
-		}
-
-		return bytes;
-	}
+        return archive;
+    }
 
 }
-
-/*
- * public byte[] compressData(FileCompressor fileCompressor) throws Exception {
- * ByteArrayOutputStream baos = new ByteArrayOutputStream(); SevenZOutputFile
- * sevenZOutput = new SevenZOutputFile(new File(
- * fileCompressor.getCompressedPath())); try { for (BinaryFile binaryFile :
- * fileCompressor.getMapBinaryFile() .values()) { SevenZArchiveEntry entry =
- * sevenZOutput.createArchiveEntry( new File(binaryFile.getSrcPath()),
- * binaryFile.getDesPath()); entry.setSize(binaryFile.getActualSize());
- * sevenZOutput.putArchiveEntry(entry);
- * sevenZOutput.write(binaryFile.getData()); sevenZOutput.closeArchiveEntry(); }
- * sevenZOutput.finish(); } catch (Exception e) {
- * FileCompressor.LOGGER.error("Error on compress data", e); } finally {
- * sevenZOutput.close(); baos.close(); } return baos.toByteArray(); }
- * 
- */
