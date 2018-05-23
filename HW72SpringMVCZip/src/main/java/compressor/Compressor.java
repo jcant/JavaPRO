@@ -1,7 +1,7 @@
-package com.gmail.gm.jcant.javaPro;
+package compressor;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public interface Compressor {
-    public byte[] compress(MultipartFile file);
+    public byte[] compress(MultipartFile[] file);
 }
