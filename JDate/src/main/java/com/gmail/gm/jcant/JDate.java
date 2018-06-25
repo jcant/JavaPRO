@@ -85,14 +85,14 @@ public class JDate {
         return our.getTime();
     }
 
-    public static long getDifferenceYears(Date from, Date to) {
+    public static long getDifferenceDays(Date from, Date to) {
     	long msDiff = to.getTime() - from.getTime();
     	long diff =  TimeUnit.DAYS.convert(msDiff, TimeUnit.MILLISECONDS);
 
         return diff;
     }
     
-    public static int getDifferenceDays(Date from, Date to) {
+    public static int getDifferenceYears(Date from, Date to) {
         Calendar dayFrom = Calendar.getInstance();
         dayFrom.setTime(from);
         Calendar dayTo = Calendar.getInstance();
